@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('problem_id')->constrained()->onDelete('cascade');
             $table->text('code');
             $table->string('language');
-            $table->string('status');
+            $table->enum('status',['pending', 'accepted', 'rejected'])->default('pending');
             $table->integer('score')->default(0);
             $table->timestamps();
             $table->softDeletes();

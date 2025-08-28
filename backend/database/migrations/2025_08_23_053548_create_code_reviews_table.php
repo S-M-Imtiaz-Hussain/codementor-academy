@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('code_reviews', function (Blueprint $table) {
             $table->id();
             $table->foreignId('submission_id')->constrained()->onDelete('cascade');
-            $table->foreignId('reviewer_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('reviewer_id')->nullable()->constrained('users')->onDelete('set null');
             $table->text('feedback')->nullable();
-            $table->text('ai_suggestions')->nullable();
+            $table->json('ai_suggestions')->nullable();
             $table->timestamps();
             $table->softDeletes();
             

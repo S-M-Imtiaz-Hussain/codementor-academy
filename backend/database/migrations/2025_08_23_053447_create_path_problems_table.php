@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('path_id')->constrained('learning_paths')->onDelete('cascade');
             $table->foreignId('problem_id')->constrained('problems')->onDelete('cascade');
-            $table->integer('order')->default(0);
+            $table->integer('order')->default(1);
             $table->boolean('is_required')->default(true);
             $table->timestamps();
         });

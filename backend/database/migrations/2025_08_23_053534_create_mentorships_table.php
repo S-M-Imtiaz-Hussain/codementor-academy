@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('mentor_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('student_id')->constrained('users')->onDelete('cascade');
-            $table->string('status');
+            $table->enum('status',['pending','active','completed','cancelled'])->default('pending');
             $table->timestamps();
             $table->softDeletes();
         });

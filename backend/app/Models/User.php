@@ -4,13 +4,14 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'skill_level',
     ];
 
     /**
@@ -45,4 +48,28 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
+    }   
+    public function progress()
+    {
+        return $this->hasMany(UserProgress::class);
+    }
+    public  function mentorshipsAsStudent()
+    {
+        return $this->hasMany(Mentorship::class, 'student_id');
+    }
+    public function mentorshipsAsMentor()
+    {
+        return $this->hasMany(Mentorship::class, 'mentor_id');      
+    }
+    public function codeReviews()
+    {
+        return $this->hasMany(CodeReview::class, 'reviewer_id');
+    }
+
+
 }

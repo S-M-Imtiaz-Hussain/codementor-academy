@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('difficulty')->default('easy');
-            $table->string('category');
-            $table->longText('test_cases');
+            $table->enum('difficulty',['easy','medium','hard'])->default('easy');
+            $table->string('category')->nullable();
+            $table->json('test_cases')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

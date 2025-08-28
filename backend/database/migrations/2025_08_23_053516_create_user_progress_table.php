@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('problem_id')->constrained()->onDelete('cascade');
-            $table->string('status')->default('incomplete'); // e.g., incomplete, in_progress, completed
+            $table->enum('status',['not_started','in_progress','completed'])->default('not_started');
             $table->integer('attempts')->default(0);
-            $table->integer('best_score')->default(0);
+            $table->integer('best_score')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
