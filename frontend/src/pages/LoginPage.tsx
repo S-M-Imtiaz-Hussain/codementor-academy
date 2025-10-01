@@ -46,12 +46,16 @@ function LoginPage() {
     // );
 
     return (
-        <form onSubmit = {handleSubmit}>
-            <Input label="Email Address" type="email" value={email} onChange={(e) => setEmail(e.target.value)} error={errors.email} placeholder="Enter your email" />
-            <Input label="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} error={errors.password} placeholder="Enter Your Password" />
-            <Button type="submit" variant="Primary" className="w-full mt-4">Login </Button>
-            <Button type="button" variant="secondary" className="w-full mt-2" onClick={()=>console.log('Go to register')} >Create Account</Button>
-        </form>
+        <div className = "min-h-screen flex items-center justify-center bg-gray-50 p-4">
+            <Card title = "Login to Your Account" className="w-full max-w-md">
+                <form onSubmit = {handleSubmit}>
+                    <Input label="Email Address" type="email" value={email} onChange={(e) => setEmail(e.target.value)} error={errors.email} placeholder="Enter your email" />
+                    <Input label="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} error={errors.password} placeholder="Enter Your Password" />
+                    <Button type="submit" variant="Primary" className="w-full mt-4">Login </Button>
+                    <Button type="button" variant="secondary" className="w-full mt-2" onClick={()=>console.log('Go to register')} >Create Account</Button>
+                </form>
+            </Card>
+        </div>
     )
 }
 
