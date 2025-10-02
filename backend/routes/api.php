@@ -13,10 +13,10 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::post('register', [AuthenticationController::class, 'register']);
-Route::post('login', [AuthenticationController::class, 'login']);
-Route::post('forgot-password', [AuthenticationController::class, 'forgotPassword']);
-Route::post('reset-password', [AuthenticationController::class, 'resetPassword']);
+Route::post('/api/register', [AuthenticationController::class, 'register']);
+Route::post('/api/login', [AuthenticationController::class, 'login']);
+Route::post('/forgot-password', [AuthenticationController::class, 'forgotPassword']);
+Route::post('/reset-password', [AuthenticationController::class, 'resetPassword']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('user/logout', [AuthenticationController::class, 'logout']);
