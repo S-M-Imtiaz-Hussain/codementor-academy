@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
 import Button from '../components/Button';
 import Input from '../components/Input';
@@ -11,11 +12,22 @@ function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState({email: '', password: ''});
+    const navigate = useNavigate();
 
     async function handleSubmit(e: React.FormEvent) {
         e.preventDefault();
 
-        await login(email,password);
+        try{
+            await login(email, password);
+            navigate('/dashboard');
+        } catch (error: any) {
+            setErrors({email: '', password: ''});
+            if(error.message.includes('Invalid')) {
+                setErrors({email: ' ', password: 'Invalid email or password'});
+            } else {
+                setErrors({email: ' ', password: 'Login failed. Please try again.'});
+            }       
+        }
 
         // const newErrors = {email: '', password: ''};
 

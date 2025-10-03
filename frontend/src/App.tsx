@@ -7,6 +7,9 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage.tsx';
 import LoginPage from './pages/LoginPage.tsx';
 import RegisterPage from './pages/RegiserPage.tsx';
+import DashboardPage from './pages/DashboardPage.tsx';
+import ProfilePage from './pages/ProfilePage.tsx';
+import PrivateRoute from './components/PrivateRoute.tsx';
 
 function App() {
   return (
@@ -15,6 +18,18 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/dashboard" 
+          element={
+            <PrivateRoute>
+              <DashboardPage />
+            </PrivateRoute>
+          } />
+        <Route path="/profile" 
+          element={
+            <PrivateRoute>
+              <ProfilePage />
+            </PrivateRoute>
+            } />
       </Routes>
     </BrowserRouter>
   );
