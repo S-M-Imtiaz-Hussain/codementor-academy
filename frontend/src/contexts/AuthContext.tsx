@@ -1,5 +1,6 @@
 import React, { createContext , useContext, useState, ReactNode } from 'react';
 import api from '../services/api';
+import { useUI } from './UIContext';
 
 
 type User = {id:number; name:string; email:string};
@@ -24,7 +25,8 @@ export function useAuth() {
 
 export function AuthProvider({children} : {children: ReactNode}) {
     const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
+    const [setLoading, setError, clearError] = useUI();
 
     async function login(email:string, password: string){
         setLoading(true);
@@ -40,15 +42,21 @@ export function AuthProvider({children} : {children: ReactNode}) {
             console.log('login successful', userData);
         }
         catch(error: any) {
-            console.error('Login error: ',error);
+            // console.log('Login error: ',error);
+            setError(
+                error.response?.status ===  401
+                    ? 'Invalid Credentials'
+                    : 'Login Failed. Please Try Again'
+            );
+            throw error;
 
-            if(error.response?.status === 401) {
-                throw new Error('Invalid email or password');
-            } else if (error.response?.status >= 500) {
-                throw new Error('Server error. Please try again later.');
-            } else {
-                throw new Error('Login failed. Please try again.');
-            }
+            // if(error.response?.status === 401) {
+            //     throw new Error('Invalid email or password');
+            // } else if (error.response?.status >= 500) {
+            //     throw new Error('Server error. Please try again later.');
+            // } else {
+            //     throw new Error('Login failed. Please try again.');
+            // }
         }
         finally {
             setLoading(false);
@@ -72,12 +80,18 @@ export function AuthProvider({children} : {children: ReactNode}) {
             console.log('Registration Successfull', userData);
         }
         catch(error: any) {
-            console.error('Registration error: ', error);
+            // console.error('Registration error: ', error);
 
-            if(error.response?.status === 422) {
-                const validationErrors = error.response.data.errors;
-                throw new Error(Object.values(validationErrors).flat().join(' '));
-            }
+            // if(error.response?.status === 422) {
+            //     const validationErrors = error.response.data.errors;
+            //     throw new Error(Object.values(validationErrors).flat().join(' '));
+            // }
+            const msg = error.response?.status === 422
+                ? Object.values(error.respojnse.data.errors).flat().join(' ')
+                : 'Registration Failed.';
+            
+            setError(msg);
+            throw error;
         }
         finally {
             setLoading(false);
@@ -85,15 +99,25 @@ export function AuthProvider({children} : {children: ReactNode}) {
     }
 
     async function logout() {
+        // try {
+        //     await api.post('/logout');
+        // } catch (error) {
+        //     console.error('Logout.error: ',error);
+        // }
+        // finally {
+        //     localStorage.removeItem('auth_token');
+        //     setUser(null);
+        //     console.log('User logged out!');
+        // }
+        clearError();
+        setLoading(true);
         try {
             await api.post('/logout');
-        } catch (error) {
-            console.error('Logout.error: ',error);
-        }
+        } catch {}
         finally {
             localStorage.removeItem('auth_token');
             setUser(null);
-            console.log('User logged out!');
+            setLoading(false);
         }
     }
 
@@ -101,7 +125,5 @@ export function AuthProvider({children} : {children: ReactNode}) {
         <AuthContext.Provider value={{user,login, logout, register, loading}}>
             {children}
         </AuthContext.Provider>
-    )
+    );
 }
-
-
