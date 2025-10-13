@@ -7,17 +7,17 @@ type ButtonProps = {
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;  
 
 function Button({children, variant = 'primary', className='' , ...props} : ButtonProps) {
-    const baseStyles = "px-4 py-2 rounded font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2";
+    const base = "px-4 py-2 rounded font-medium focus:outline-none focus:ring-2 focus:ring-offset-2";
 
-    let variantStyles = "";
+    let variants = "";
 
     if(variant === 'primary') {
-        variantStyles = "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500";
+        variants = "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-400";
     } else if (variant === 'secondary') {
-        variantStyles = "bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500";  
+        variants = "bg-gray-200 text-white hover:bg-gray-700 focus:ring-gray-400";  
     }
 
-    const finalStyles = '${baseStyles} ${variantStyles} ${className}';
+    const finalStyles = `${base} ${variants} ${className}`;
 
     return (
         <button className = {finalStyles} {...props}>

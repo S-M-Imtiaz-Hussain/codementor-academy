@@ -3,14 +3,14 @@ import React from 'react';
 
 type CardProps = {
     children : React.ReactNode;
-    title ?: string;
+    title?: string;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 
-function Card ({children, title, className = '', ...props } : cardProps) {
+function Card ({children, title, className = '', ...props } : CardProps) {
 
     const baseStyles = "bg-white border rounded-lg shadow-sm p-6";
-    const finalStyles = '${baseStyles} ${className}';
+    const finalStyles = `${baseStyles} ${className}`;
 
     return (
         <div className ={finalStyles} {...props}>

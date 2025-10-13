@@ -1,8 +1,8 @@
-import React,{ createContext , useContext, useState, ReactNode } from 'react';
+import React,{ createContext, useContext, useState, ReactNode } from 'react';
 
 type UIContextType = {
     loading: boolean;
-    setLoading: (loading: boolean) => void;
+    setLoading: (val: boolean) => void;
     error: string;
     setError: (message: string) => void;
     clearError: () => void;
